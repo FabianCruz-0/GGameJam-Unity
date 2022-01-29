@@ -37,8 +37,8 @@ public class GameTerrain : MonoBehaviour
         
     }
 
-    public void BuildTerrain()
-    {
+    // public void BuildTerrain()
+    // {
         
-    }
+    // }
 }

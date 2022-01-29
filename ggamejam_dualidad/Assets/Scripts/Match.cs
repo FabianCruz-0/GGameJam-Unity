@@ -8,7 +8,8 @@ public class Match : MonoBehaviour
     public GameTerrain terrain;
     public PlayerController PlayerController;
     public EnemyController  EnemyController;
-
+    public Vector2Int PlayerPos;
+    public Vector2Int EnemyPos;
     void Start()
     {
         int PlayerX = Random.Range(0,terrain.width); //filas
@@ -17,12 +18,8 @@ public class Match : MonoBehaviour
         int EnemyX = Random.Range(0,terrain.width);
         int EnemyY = Random.Range(terrain.length/2,terrain.length);
         
-        Vector2 PlayerPos = new Vector2(PlayerX,PlayerY);
-        Vector2 EnemyPos = new Vector2(EnemyX,EnemyY);
-
-        Debug.Log(PlayerX);
-        Debug.Log(PlayerY);
-        Debug.Log(terrain.cells[PlayerX,PlayerY]);
+        PlayerPos = new Vector2Int(PlayerX,PlayerY);
+        EnemyPos = new Vector2Int(EnemyX,EnemyY);
 
         Vector3 PosicionMundoCeldaPlayer = terrain.cells[PlayerX,PlayerY].position.transform.position;
         Vector3 PosicionMundoCeldaEnemy = terrain.cells[EnemyX,EnemyY].position.transform.position;
