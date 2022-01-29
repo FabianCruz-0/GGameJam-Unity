@@ -11,9 +11,7 @@ public class PlayerController : CharacterClass
         match = GameObject.Find("Match");
         terrain = GameObject.FindObjectOfType<GameTerrain>();
 
-
         matrixPosition = match.GetComponent<Match>().PlayerPos;
-        Debug.Log(matrixPosition);
     }
 
     void Update()
