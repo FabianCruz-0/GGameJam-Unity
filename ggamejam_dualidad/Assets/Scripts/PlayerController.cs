@@ -2,22 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : CharacterClass
 {
-    public string actualPos;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        RaycastHit hit;
-    Physics.Raycast(this.transform.position,Vector3.down,out hit,10f);
-     Debug.DrawRay(this.transform.position,Vector3.down,Color.red);
-     actualPos = hit.collider.gameObject.name;
-     Debug.Log(actualPos);
+        movement();
     }
+
+    void movement()
+    {
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+        {
+            Debug.Log("MOVEMENT GOES UP");
+            position -= new Vector2(1, 0);
+            Debug.Log(position);
+        }
+
+        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+        {
+            Debug.Log("MOVEMENT GOES RIGHT");
+            position += new Vector2(0, 1);
+            Debug.Log(position);
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+        {
+            Debug.Log("MOVEMENT GOES DOWN");
+            position += new Vector2(1, 0);
+            Debug.Log(position);
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+        {
+            Debug.Log("MOVEMENT GOES LEFT");
+            position -= new Vector2(0, 1);
+            Debug.Log(position);
+        }
+    }
+
 }
