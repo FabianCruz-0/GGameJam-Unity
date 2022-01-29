@@ -39,7 +39,7 @@ public class GameTerrain : MonoBehaviour
     public void BuildTerrain()
     {
         cells = new Cell[width, length];
-        var first = gameObject.transform.position;
+        var first = transform.position;
 
         for (int i = 0; i < width; i++)
         {
