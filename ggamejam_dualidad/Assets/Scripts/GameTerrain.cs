@@ -12,23 +12,13 @@ public class GameTerrain : MonoBehaviour
     public float cellOffsetX = 0;
     public float cellOffsetZ = 0;
 
-    private Cell[,] cells;
+    public Cell[,] cells;
 
     // Start is called before the first frame update
     void Start()
     {
+     cells = new Cell[width, length];
         
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void BuildTerrain()
-    {
-        cells = new Cell[width, length];
         var first = gameObject.transform.position;
 
         for (int i = 0; i < width; i++)
@@ -39,5 +29,16 @@ public class GameTerrain : MonoBehaviour
                 cells[i, j].transform.parent = transform;
             }
         }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    public void BuildTerrain()
+    {
+        
     }
 }
