@@ -26,6 +26,16 @@ public class GameTerrain : MonoBehaviour
         
     }
 
+    public Cell GetCellAt(int x, int y)
+    {
+        if(cells != null)
+        {
+            return cells[x, y];
+        }
+
+        return null;
+    }
+
     public void BuildTerrain()
     {
         cells = new Cell[width, length];
