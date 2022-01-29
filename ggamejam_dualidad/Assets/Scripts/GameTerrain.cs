@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameTerrain : MonoBehaviour
 {
-    public Cell cell;
+    public Cell cellPrefab;
 
     public int width = 1;
     public int length = 1;
@@ -17,21 +17,27 @@ public class GameTerrain : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cells = new Cell[width, length];
-        var first = gameObject.transform.position;
-
-        for(int i = 0; i < width; i++)
-        {
-            for (int j = 0; j < length; j++)
-            {
-                cells[i, j] = Instantiate<Cell>(cell, new Vector3(first.x + i * cellOffsetX, first.y, first.z + j * cellOffsetZ), Quaternion.identity);
-            }
-        }
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void BuildTerrain()
+    {
+        cells = new Cell[width, length];
+        var first = gameObject.transform.position;
+
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < length; j++)
+            {
+                cells[i, j] = Instantiate<Cell>(cellPrefab, new Vector3(first.x + i * cellOffsetX, first.y, first.z + j * cellOffsetZ), Quaternion.identity);
+                cells[i, j].transform.parent = transform;
+            }
+        }
     }
 }
