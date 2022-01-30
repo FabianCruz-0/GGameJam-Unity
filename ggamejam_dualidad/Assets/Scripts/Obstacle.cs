@@ -36,4 +36,10 @@ public class Obstacle : MonoBehaviour
             _matrixPosition = value;
         }
     }
+
+    private void OnDestroy()
+    {
+        var currentCell = terrain.cells[_matrixPosition.x, _matrixPosition.y];
+        currentCell.value = 0;
+    }
 }

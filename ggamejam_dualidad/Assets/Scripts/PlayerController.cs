@@ -49,6 +49,7 @@ public class PlayerController : CharacterClass
                 eventRoulette.match.DestroyObjs();
                 eventRoulette.match.objectsPos();
                 eventRoulette.match.objectsInit();
+                eventRoulette.match.ResetObstacles();
                 canMove = false;
                 eventRoulette.StartRoulette();
                 turnsSystem.TurnNumber += 1;
