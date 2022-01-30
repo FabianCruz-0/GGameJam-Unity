@@ -21,32 +21,40 @@ public class PlayerController : CharacterClass
 
     void movement()
     {
+        bool positionChanged = false;
+
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
             Debug.Log("MOVEMENT GOES UP");
             matrixPosition -= new Vector2Int(1,0);
-            this.transform.position = terrain.cells[matrixPosition.x,matrixPosition.y].position.transform.position;
+            positionChanged = true;
         }
 
         if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
             Debug.Log("MOVEMENT GOES RIGHT");
             matrixPosition += new Vector2Int(0,1);
-            this.transform.position = terrain.cells[matrixPosition.x,matrixPosition.y].position.transform.position;
+            positionChanged = true;
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
             Debug.Log("MOVEMENT GOES DOWN");
             matrixPosition += new Vector2Int(1,0);
-            this.transform.position = terrain.cells[matrixPosition.x,matrixPosition.y].position.transform.position;
+            positionChanged = true;
         }
 
         if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
         {
             Debug.Log("MOVEMENT GOES LEFT");
             matrixPosition -= new Vector2Int(0,1);
-            this.transform.position = terrain.cells[matrixPosition.x,matrixPosition.y].position.transform.position;
+            positionChanged = true;
+        }
+
+        if(positionChanged)
+        {
+            matrixPosition.Clamp(minCoord, maxCoord);
+            transform.position = terrain.cells[matrixPosition.x, matrixPosition.y].position.transform.position;
         }
     }
 }

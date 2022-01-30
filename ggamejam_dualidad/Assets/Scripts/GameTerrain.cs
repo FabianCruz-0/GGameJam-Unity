@@ -14,11 +14,10 @@ public class GameTerrain : MonoBehaviour
 
     public Cell[,] cells;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-     cells = new Cell[width, length];
-        
+        cells = new Cell[width, length];
+
         var first = gameObject.transform.position;
 
         for (int i = 0; i < width; i++)
@@ -29,6 +28,12 @@ public class GameTerrain : MonoBehaviour
                 cells[i, j].transform.parent = transform;
             }
         }
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
     }
 
     // Update is called once per frame

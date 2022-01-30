@@ -10,13 +10,20 @@ public class Match : MonoBehaviour
     public EnemyController  EnemyController;
     public Vector2Int PlayerPos;
     public Vector2Int EnemyPos;
+
+    public PlayerController player;
+    public EnemyController enemy;
+
     void Start()
     {
-        int PlayerX = Random.Range(0,terrain.width); //filas
-        int PlayerY = Random.Range(0,terrain.length/2); //columnas
+        int terrainMaxCoordX = terrain.width - 1;
+        int terrainMaxCoordY = terrain.length - 1;
 
-        int EnemyX = Random.Range(0,terrain.width);
-        int EnemyY = Random.Range(terrain.length/2,terrain.length);
+        int PlayerX = Random.Range(0, terrainMaxCoordX); //filas
+        int PlayerY = Random.Range(0, terrainMaxCoordY / 2); //columnas
+
+        int EnemyX = Random.Range(0, terrainMaxCoordX);
+        int EnemyY = Random.Range(terrainMaxCoordY / 2 + 1, terrainMaxCoordY);
         
         PlayerPos = new Vector2Int(PlayerX,PlayerY);
         EnemyPos = new Vector2Int(EnemyX,EnemyY);
@@ -24,24 +31,14 @@ public class Match : MonoBehaviour
         Vector3 PosicionMundoCeldaPlayer = terrain.cells[PlayerX,PlayerY].position.transform.position;
         Vector3 PosicionMundoCeldaEnemy = terrain.cells[EnemyX,EnemyY].position.transform.position;
 
-        Instantiate<PlayerController>(PlayerController, PosicionMundoCeldaPlayer, Quaternion.identity);   
-        Instantiate<EnemyController>(EnemyController, PosicionMundoCeldaEnemy, Quaternion.identity);   
+        player = Instantiate<PlayerController>(PlayerController, PosicionMundoCeldaPlayer, Quaternion.identity);
+        enemy = Instantiate<EnemyController>(EnemyController, PosicionMundoCeldaEnemy, Quaternion.identity);
 
-        //new Vector3(terrain.cells[PlayerX,PlayerY].transform.position.x,terrain.cells[PlayerX,PlayerY].transform.position.y,0)
+        // Movement Constraints
+        player.minCoord = new Vector2Int(0, 0);
+        player.maxCoord = new Vector2Int(terrainMaxCoordX, terrainMaxCoordY / 2);
 
-        /*
-        + va a tomar el ancho y el largo de la matriz, genera una posión entre 0 y el maximo y se lo asigna al PLayer.
-        + va a tomar el ancho y el largo de la matriz, genera una posión entre 0 y el maximo y se lo asigna al Enemigo.
-        
-        Una vez se tenga la posición que va a tener el Player y el Enemigo, se instancian los Prefab, tomando el transform.position de la celda 
-        que corresponde la posición generada aleatoriamente.
-
-
-        Asigna la referencia del terreno a la clase de Player (?)
-
-        */
-
+        enemy.minCoord = new Vector2Int(0, terrainMaxCoordY / 2 + 1);
+        enemy.maxCoord = new Vector2Int(terrainMaxCoordX, terrainMaxCoordY);
     }
-
-
 }
