@@ -69,6 +69,7 @@ public class PlayerController : CharacterClass
 
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
+            ChangeDirection(Vector2Int.up);
             nextPosition -= new Vector2Int(1, 0);
             positionChanged = true;
             actions -= 1;
@@ -76,6 +77,7 @@ public class PlayerController : CharacterClass
 
         if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
+            ChangeDirection(Vector2Int.right);
             nextPosition += new Vector2Int(0, 1);
             positionChanged = true;
             actions -= 1;
@@ -83,6 +85,7 @@ public class PlayerController : CharacterClass
 
         if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
+            ChangeDirection(Vector2Int.down);
             nextPosition += new Vector2Int(1, 0);
             positionChanged = true;
             actions -= 1;
@@ -90,6 +93,7 @@ public class PlayerController : CharacterClass
 
         if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
         {
+            ChangeDirection(Vector2Int.left);
             nextPosition -= new Vector2Int(0, 1);
             positionChanged = true;
             actions -= 1;
