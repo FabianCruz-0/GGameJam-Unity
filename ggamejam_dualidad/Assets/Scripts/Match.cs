@@ -7,29 +7,37 @@ public class Match : MonoBehaviour
 
     public GameTerrain terrain;
     public PlayerController PlayerController;
-    public EnemyController  EnemyController;
+    public EnemyController EnemyController;
     public Vector2Int PlayerPos;
     public Vector2Int EnemyPos;
 
     public PlayerController player;
     public EnemyController enemy;
 
+    public int numObjs;
+    public Vector2Int[] objsCells;
+    int terrainMaxCoordX;
+    int terrainMaxCoordY;
+
+    public HealthPotion healthPotion;
+    public Bomb bomb;
+
     void Start()
     {
-        int terrainMaxCoordX = terrain.width - 1;
-        int terrainMaxCoordY = terrain.length - 1;
+        terrainMaxCoordX = terrain.width - 1;
+        terrainMaxCoordY = terrain.length - 1;
 
         int PlayerX = Random.Range(0, terrainMaxCoordX); //filas
         int PlayerY = Random.Range(0, terrainMaxCoordY / 2); //columnas
 
         int EnemyX = Random.Range(0, terrainMaxCoordX);
         int EnemyY = Random.Range(terrainMaxCoordY / 2 + 1, terrainMaxCoordY);
-        
-        PlayerPos = new Vector2Int(PlayerX,PlayerY);
-        EnemyPos = new Vector2Int(EnemyX,EnemyY);
 
-        Vector3 PosicionMundoCeldaPlayer = terrain.cells[PlayerX,PlayerY].position.transform.position;
-        Vector3 PosicionMundoCeldaEnemy = terrain.cells[EnemyX,EnemyY].position.transform.position;
+        PlayerPos = new Vector2Int(PlayerX, PlayerY);
+        EnemyPos = new Vector2Int(EnemyX, EnemyY);
+
+        Vector3 PosicionMundoCeldaPlayer = terrain.cells[PlayerX, PlayerY].position.transform.position;
+        Vector3 PosicionMundoCeldaEnemy = terrain.cells[EnemyX, EnemyY].position.transform.position;
 
         player = Instantiate<PlayerController>(PlayerController, PosicionMundoCeldaPlayer, Quaternion.identity);
         enemy = Instantiate<EnemyController>(EnemyController, PosicionMundoCeldaEnemy, Quaternion.identity);
@@ -40,5 +48,68 @@ public class Match : MonoBehaviour
 
         enemy.minCoord = new Vector2Int(0, terrainMaxCoordY / 2 + 1);
         enemy.maxCoord = new Vector2Int(terrainMaxCoordX, terrainMaxCoordY);
+
+        objectsPos();
+        objectsInit();
+    }
+    void objectsPos()
+    {
+        numObjs = Random.Range(5, 16);
+        objsCells = new Vector2Int[numObjs];
+        bool isBadPlace;
+        for (int i = 0; i < numObjs; i++)
+        {
+            isBadPlace = true;
+            while (isBadPlace)
+            {
+                Vector2Int PosibleCelda = new Vector2Int(Random.Range(0, terrainMaxCoordX), Random.Range(0, terrainMaxCoordY));
+
+                if (terrain.cells[PosibleCelda.x, PosibleCelda.y].value == 0)
+                {
+                    objsCells[i] = PosibleCelda;
+                    isBadPlace = false;
+                }
+                else
+                {
+                    isBadPlace = true;
+                }
+            }
+        }
+
+        Debug.Log(numObjs);
+    }
+    void objectsInit()
+    {
+        for (int i = 0; i < numObjs; i++)
+        {
+            Vector3 posicion = terrain.cells[objsCells[i].x, objsCells[i].y].position.transform.position;
+            int objType = Random.Range(0, 3);
+
+            switch (objType)
+            {
+                case 0:
+                    // Health
+
+                    healthPotion = Instantiate<HealthPotion>(healthPotion, posicion, Quaternion.identity);
+
+                    break;
+                case 1:
+                    //Bomb
+
+                    bomb = Instantiate<Bomb>(bomb, posicion, Quaternion.identity);
+
+                    break;
+                case 2:
+                    //Barrier
+                    break;
+            }
+        }
+    }
+    void destroyObj()
+    {
+        foreach (GameObject fooObj in GameObject.FindGameObjectsWithTag("OBJECT"))
+        {
+
+        }
     }
 }
