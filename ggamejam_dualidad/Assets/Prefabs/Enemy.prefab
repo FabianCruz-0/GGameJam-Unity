@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -2109083736674806667}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -109,3 +109,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 761e076b7cda56248823b60bb965789d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  matrixPosition: {x: 0, y: 0}
+  health: 0
+  minCoord: {x: 0, y: 0}
+  maxCoord: {x: 0, y: 0}
+  terrain: {fileID: 0}
+  player: {fileID: 0}

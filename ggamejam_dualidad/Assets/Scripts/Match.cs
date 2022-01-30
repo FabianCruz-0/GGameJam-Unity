@@ -88,25 +88,14 @@ public class Match : MonoBehaviour
         for (int i = 0; i < numObjs; i++)
         {
             Vector3 posicion = terrain.cells[objsCells[i].x, objsCells[i].y].position.transform.position;
-            int objType = Random.Range(0, 3);
+            int objType = Random.Range(0, 100);
 
-            switch (objType)
+            if(objType>=0 && objType<=60)
             {
-                case 0:
-                    // Health
-
-                    healthPotion = Instantiate<HealthPotion>(healthPotion, posicion, Quaternion.identity);
-
-                    break;
-                case 1:
-                    //Bomb
-
-                    bomb = Instantiate<Bomb>(bomb, posicion, Quaternion.identity);
-
-                    break;
-                case 2:
-                    //Barrier
-                    break;
+                var bombvar = Instantiate<Bomb>(bomb, posicion, Quaternion.identity);
+            } else if(objType>=61 && objType<=99)
+            {
+                var healthPotionvar = Instantiate<HealthPotion>(healthPotion, posicion, Quaternion.identity);
             }
         }
     }
