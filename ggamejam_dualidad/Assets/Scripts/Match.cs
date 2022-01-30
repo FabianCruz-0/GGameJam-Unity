@@ -102,7 +102,7 @@ public class Match : MonoBehaviour
         }
     }
 
-    void ResetObstacles()
+    public void ResetObstacles()
     {
         int totalObstacles = Random.Range(0, maxObstacles);
         for (int i = 0; i < totalObstacles; i++)
