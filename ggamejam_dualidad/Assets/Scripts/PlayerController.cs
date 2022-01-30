@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : CharacterClass
 {
@@ -8,15 +9,18 @@ public class PlayerController : CharacterClass
     public EventRoulette eventRoulette;
     public int actions;
     public bool canMove;
+    public Text HealthText;
 
     void Start()
     {
+        health = 5;
         actions = 5;
         canMove = true;
         match = GameObject.Find("Match");
         terrain = GameObject.FindObjectOfType<GameTerrain>();
         turnsSystem = GameObject.FindObjectOfType<TurnsSystem>();
         eventRoulette = GameObject.FindObjectOfType<EventRoulette>();
+        HealthText = GameObject.Find("PlayerHealth").GetComponent<Text>();
 
         matrixPosition = match.GetComponent<Match>().PlayerPos;
     }
@@ -28,6 +32,7 @@ public class PlayerController : CharacterClass
             KeyPressed();
         }
 
+        HealthText.text = "Player Health: "+ health;
     }
 
     void KeyPressed()

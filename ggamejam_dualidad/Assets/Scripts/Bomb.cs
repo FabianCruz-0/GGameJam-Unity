@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    void OnTriggerStay(Collider other)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if(other.CompareTag("Player"))
+        {
+            other.GetComponent<PlayerController>().health-=1;
+            Destroy(gameObject);
+        } else if(other.CompareTag("Enemy"))
+        {
+            other.GetComponent<EnemyController>().health-=1;
+            Destroy(gameObject);
+        }
     }
 }

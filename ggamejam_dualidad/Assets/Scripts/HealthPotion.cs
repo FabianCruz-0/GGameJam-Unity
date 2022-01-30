@@ -4,8 +4,16 @@ using UnityEngine;
 
 public class HealthPotion : MonoBehaviour
 {
-    void Start()
+    void OnTriggerStay(Collider other)
     {
-
+        if(other.CompareTag("Player"))
+        {
+            other.GetComponent<PlayerController>().health+=1;
+            Destroy(gameObject);
+        } else if(other.CompareTag("Enemy"))
+        {
+            other.GetComponent<EnemyController>().health+=1;
+            Destroy(gameObject);
+        }
     }
 }

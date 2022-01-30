@@ -1,17 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyController : CharacterClass
 {
 
     public PlayerController player;
+    public Text HealthText;
 
     void Start()
     {
+        health=5;
         match = GameObject.Find("Match");
         terrain = GameObject.FindObjectOfType<GameTerrain>();
         player = GameObject.FindObjectOfType<PlayerController>();
+        HealthText = GameObject.Find("EnemyHealth").GetComponent<Text>();
 
         matrixPosition = match.GetComponent<Match>().EnemyPos;
     }
@@ -22,6 +26,7 @@ public class EnemyController : CharacterClass
         {
             movement();
         }
+    HealthText.text = "Enemy Health: "+ health;
     }
 
     void movement()
