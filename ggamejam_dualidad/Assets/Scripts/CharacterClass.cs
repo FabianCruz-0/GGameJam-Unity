@@ -12,7 +12,7 @@ public class CharacterClass : MonoBehaviour
     public GameTerrain terrain;
     protected GameObject match;
 
-    protected void MoveToCell(Vector2Int coordinates)
+    public void MoveToCell(Vector2Int coordinates)
     {
         coordinates.Clamp(minCoord, maxCoord);
 

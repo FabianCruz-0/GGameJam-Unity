@@ -10,9 +10,9 @@ public class EventRoulette : MonoBehaviour
 
     public string[] eventNames =
     {
-        "Evento de testeo",
-        "Evento random",
-        "Evento random 2"
+        "Teletransportación",
+        "Evento testeo",
+        "Evento random"
     };
 
     public float rouletteTempo = 5f;
@@ -37,10 +37,16 @@ public class EventRoulette : MonoBehaviour
     {
         Event[] events =
         {
+            new CharactersPositionChangeEvent(),
             new TestEvent()
         };
 
-        int randomIndex = Random.Range(0, events.Length - 1);
+        int randomIndex = Random.Range(0, events.Length);
+
+        if (eventText)
+        {
+            eventText.text = eventNames[randomIndex];
+        }
 
         events[randomIndex].Execute(match);
         match.player.canMove = true;
