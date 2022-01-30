@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Match : MonoBehaviour
 {
+    public GameObject cameraPivot;
+
     public Obstacle obstaclePrefab;
     public int maxObstacles = 10;
 
