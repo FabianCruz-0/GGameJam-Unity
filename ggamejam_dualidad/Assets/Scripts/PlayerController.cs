@@ -5,8 +5,9 @@ using UnityEngine;
 public class PlayerController : CharacterClass
 {
     public TurnsSystem turnsSystem;
-    int actions;
-    bool canMove;
+    public EventRoulette eventRoulette;
+    public int actions;
+    public bool canMove;
 
     void Start()
     {
@@ -15,26 +16,46 @@ public class PlayerController : CharacterClass
         match = GameObject.Find("Match");
         terrain = GameObject.FindObjectOfType<GameTerrain>();
         turnsSystem = GameObject.FindObjectOfType<TurnsSystem>();
+        eventRoulette = GameObject.FindObjectOfType<EventRoulette>();
 
         matrixPosition = match.GetComponent<Match>().PlayerPos;
     }
 
     void Update()
     {
-        if (actions > 0 && canMove)
+        if (Input.anyKey)
         {
-            movement();
-        } else {
-
-            Debug.Log("Turn Finished.");
-            turnsSystem.TurnNumber += 1;
-            actions=5;
+            KeyPressed();
         }
 
     }
 
+    void KeyPressed()
+    {
+        if (actions > 0)
+        {
+            movement();
+        }
+        else
+        {
+            if (canMove)
+            {
+                Debug.Log("Turn Finished.");
+                canMove = false;
+                eventRoulette.StartRoulette();
+                turnsSystem.TurnNumber += 1;
+            }
+        }
+    }
+
     void movement()
     {
+
+        if (canMove == false)
+        {
+            return;
+        }
+
         bool positionChanged = false;
         var nextPosition = matrixPosition;
 
@@ -43,7 +64,7 @@ public class PlayerController : CharacterClass
             Debug.Log("MOVEMENT GOES UP");
             nextPosition -= new Vector2Int(1, 0);
             positionChanged = true;
-            actions-=1;
+            actions -= 1;
         }
 
         if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
@@ -51,7 +72,7 @@ public class PlayerController : CharacterClass
             Debug.Log("MOVEMENT GOES RIGHT");
             nextPosition += new Vector2Int(0, 1);
             positionChanged = true;
-            actions-=1;
+            actions -= 1;
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
@@ -59,7 +80,7 @@ public class PlayerController : CharacterClass
             Debug.Log("MOVEMENT GOES DOWN");
             nextPosition += new Vector2Int(1, 0);
             positionChanged = true;
-            actions-=1;
+            actions -= 1;
         }
 
         if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
@@ -67,7 +88,7 @@ public class PlayerController : CharacterClass
             Debug.Log("MOVEMENT GOES LEFT");
             nextPosition -= new Vector2Int(0, 1);
             positionChanged = true;
-            actions-=1;
+            actions -= 1;
         }
 
         if (positionChanged)

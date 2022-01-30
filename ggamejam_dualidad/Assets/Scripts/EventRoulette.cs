@@ -26,10 +26,6 @@ public class EventRoulette : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.K))
-        {
-            StartRoulette();
-        }
     }
 
     public void StartRoulette()
@@ -47,6 +43,8 @@ public class EventRoulette : MonoBehaviour
         int randomIndex = Random.Range(0, events.Length - 1);
 
         events[randomIndex].Execute(match);
+        match.player.canMove = true;
+        match.player.actions=5;
     }
 
     IEnumerator RandomTextCoroutine()
