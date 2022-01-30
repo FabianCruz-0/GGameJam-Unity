@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class EnemyController : CharacterClass
 {
@@ -26,6 +27,11 @@ public class EnemyController : CharacterClass
         if(player.actions > 0 )
         {
             movement();
+        }
+
+        if(health == 0 )
+        {
+            SceneManager.LoadScene("Win", LoadSceneMode.Single);
         }
     HealthText.text = "Enemy Health: "+ health;
     }

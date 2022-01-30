@@ -9,12 +9,10 @@ public class Bomb : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-        Debug.Log("BOOOOM");
         AudioSource.PlayClipAtPoint(clip,  Camera.main.transform.position,0.8f);
         }
         else if (other.CompareTag("Enemy"))
         {
-            Debug.Log("BOOOOM");
         AudioSource.PlayClipAtPoint(clip,  Camera.main.transform.position,0.8f);
         }
     }

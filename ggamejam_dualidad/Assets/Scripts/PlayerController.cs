@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : CharacterClass
 {
@@ -33,6 +34,11 @@ public class PlayerController : CharacterClass
         }
 
         HealthText.text = "Player Health: "+ health;
+
+        if(health == 0 )
+        {
+            SceneManager.LoadScene("Lose", LoadSceneMode.Single);
+        }
     }
 
     void KeyPressed()
@@ -45,7 +51,6 @@ public class PlayerController : CharacterClass
         {
             if (canMove)
             {
-                Debug.Log("Turn Finished.");
                 eventRoulette.match.DestroyObjs();
                 eventRoulette.match.objectsPos();
                 eventRoulette.match.objectsInit();

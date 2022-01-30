@@ -6,6 +6,6 @@ public class TestEvent : Event
 {
     public override void Execute(Match match, MonoBehaviour monoBehaviour)
     {
-        Debug.Log("Evento de testeo");
+        Debug.Log("Evento");
     }
 }
