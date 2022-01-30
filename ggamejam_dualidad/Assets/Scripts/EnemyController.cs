@@ -4,17 +4,24 @@ using UnityEngine;
 
 public class EnemyController : CharacterClass
 {
+
+    public PlayerController player;
+
     void Start()
     {
         match = GameObject.Find("Match");
         terrain = GameObject.FindObjectOfType<GameTerrain>();
+        player = GameObject.FindObjectOfType<PlayerController>();
 
         matrixPosition = match.GetComponent<Match>().EnemyPos;
     }
 
     void Update()
     {
-        movement();
+        if(player.actions > 0 )
+        {
+            movement();
+        }
     }
 
     void movement()
@@ -24,28 +31,24 @@ public class EnemyController : CharacterClass
 
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
-            Debug.Log("MOVEMENT GOES UP");
             nextPosition += new Vector2Int(1, 0);
             positionChanged = true;
         }
 
         if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
-            Debug.Log("MOVEMENT GOES RIGHT");
             nextPosition -= new Vector2Int(0, 1);
             positionChanged = true;
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
-            Debug.Log("MOVEMENT GOES DOWN");
             nextPosition -= new Vector2Int(1, 0);
             positionChanged = true;
         }
 
         if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
         {
-            Debug.Log("MOVEMENT GOES LEFT");
             nextPosition += new Vector2Int(0, 1);
             positionChanged = true;
         }

@@ -41,6 +41,9 @@ public class PlayerController : CharacterClass
             if (canMove)
             {
                 Debug.Log("Turn Finished.");
+                eventRoulette.match.DestroyObjs();
+                eventRoulette.match.objectsPos();
+                eventRoulette.match.objectsInit();
                 canMove = false;
                 eventRoulette.StartRoulette();
                 turnsSystem.TurnNumber += 1;
@@ -61,7 +64,6 @@ public class PlayerController : CharacterClass
 
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
-            Debug.Log("MOVEMENT GOES UP");
             nextPosition -= new Vector2Int(1, 0);
             positionChanged = true;
             actions -= 1;
@@ -69,7 +71,6 @@ public class PlayerController : CharacterClass
 
         if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
-            Debug.Log("MOVEMENT GOES RIGHT");
             nextPosition += new Vector2Int(0, 1);
             positionChanged = true;
             actions -= 1;
@@ -77,7 +78,6 @@ public class PlayerController : CharacterClass
 
         if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
-            Debug.Log("MOVEMENT GOES DOWN");
             nextPosition += new Vector2Int(1, 0);
             positionChanged = true;
             actions -= 1;
@@ -85,7 +85,6 @@ public class PlayerController : CharacterClass
 
         if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
         {
-            Debug.Log("MOVEMENT GOES LEFT");
             nextPosition -= new Vector2Int(0, 1);
             positionChanged = true;
             actions -= 1;

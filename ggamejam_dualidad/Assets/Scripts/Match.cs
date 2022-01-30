@@ -59,7 +59,7 @@ public class Match : MonoBehaviour
         objectsInit();
         ResetObstacles();
     }
-    void objectsPos()
+    public void objectsPos()
     {
         numObjs = Random.Range(5, 16);
         objsCells = new Vector2Int[numObjs];
@@ -82,10 +82,8 @@ public class Match : MonoBehaviour
                 }
             }
         }
-
-        Debug.Log(numObjs);
     }
-    void objectsInit()
+    public void objectsInit()
     {
         for (int i = 0; i < numObjs; i++)
         {
@@ -140,4 +138,13 @@ public class Match : MonoBehaviour
             obstacle.MatrixPosition = randomCoordinate;
         }
     }
+
+    public void DestroyObjs()
+    {
+        foreach (GameObject fooObj in GameObject.FindGameObjectsWithTag("OBJECT"))
+        {
+            Destroy(fooObj);
+        }
+    }
+
 }
