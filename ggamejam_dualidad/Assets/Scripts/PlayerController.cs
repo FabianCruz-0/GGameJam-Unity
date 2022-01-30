@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerController : CharacterClass
 {
-    public GameTerrain terrain;
-    GameObject match;
     public TurnsSystem turnsSystem;
     int actions;
     bool canMove;
@@ -38,11 +36,12 @@ public class PlayerController : CharacterClass
     void movement()
     {
         bool positionChanged = false;
+        var nextPosition = matrixPosition;
 
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
             Debug.Log("MOVEMENT GOES UP");
-            matrixPosition -= new Vector2Int(1, 0);
+            nextPosition -= new Vector2Int(1, 0);
             positionChanged = true;
             actions-=1;
         }
@@ -50,7 +49,7 @@ public class PlayerController : CharacterClass
         if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
             Debug.Log("MOVEMENT GOES RIGHT");
-            matrixPosition += new Vector2Int(0, 1);
+            nextPosition += new Vector2Int(0, 1);
             positionChanged = true;
             actions-=1;
         }
@@ -58,7 +57,7 @@ public class PlayerController : CharacterClass
         if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
             Debug.Log("MOVEMENT GOES DOWN");
-            matrixPosition += new Vector2Int(1, 0);
+            nextPosition += new Vector2Int(1, 0);
             positionChanged = true;
             actions-=1;
         }
@@ -66,15 +65,14 @@ public class PlayerController : CharacterClass
         if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
         {
             Debug.Log("MOVEMENT GOES LEFT");
-            matrixPosition -= new Vector2Int(0, 1);
+            nextPosition -= new Vector2Int(0, 1);
             positionChanged = true;
             actions-=1;
         }
 
         if (positionChanged)
         {
-            matrixPosition.Clamp(minCoord, maxCoord);
-            transform.position = terrain.cells[matrixPosition.x, matrixPosition.y].position.transform.position;
+            MoveToCell(nextPosition);
         }
     }
 }

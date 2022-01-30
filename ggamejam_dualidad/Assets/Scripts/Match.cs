@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Match : MonoBehaviour
 {
+    public Obstacle obstaclePrefab;
+    public int maxObstacles = 10;
 
     public GameTerrain terrain;
     public PlayerController PlayerController;
@@ -36,8 +38,12 @@ public class Match : MonoBehaviour
         PlayerPos = new Vector2Int(PlayerX, PlayerY);
         EnemyPos = new Vector2Int(EnemyX, EnemyY);
 
-        Vector3 PosicionMundoCeldaPlayer = terrain.cells[PlayerX, PlayerY].position.transform.position;
-        Vector3 PosicionMundoCeldaEnemy = terrain.cells[EnemyX, EnemyY].position.transform.position;
+        var playerCell = terrain.cells[PlayerX, PlayerY];
+        var enemyCell = terrain.cells[EnemyX, EnemyY];
+        Vector3 PosicionMundoCeldaPlayer = playerCell.position.transform.position;
+        Vector3 PosicionMundoCeldaEnemy = enemyCell.position.transform.position;
+        playerCell.value = 1;
+        enemyCell.value = 1;
 
         player = Instantiate<PlayerController>(PlayerController, PosicionMundoCeldaPlayer, Quaternion.identity);
         enemy = Instantiate<EnemyController>(EnemyController, PosicionMundoCeldaEnemy, Quaternion.identity);
@@ -51,6 +57,7 @@ public class Match : MonoBehaviour
 
         objectsPos();
         objectsInit();
+        ResetObstacles();
     }
     void objectsPos()
     {
@@ -105,11 +112,32 @@ public class Match : MonoBehaviour
             }
         }
     }
-    void destroyObj()
-    {
-        foreach (GameObject fooObj in GameObject.FindGameObjectsWithTag("OBJECT"))
-        {
 
+    void ResetObstacles()
+    {
+        int totalObstacles = Random.Range(0, maxObstacles);
+        for (int i = 0; i < totalObstacles; i++)
+        {
+            var obstacle = Instantiate<Obstacle>(obstaclePrefab, transform);
+            obstacle.terrain = terrain;
+
+            int terrainMaxCoordX = terrain.width - 1;
+            int terrainMaxCoordY = terrain.length - 1;
+
+            int randomX = Random.Range(0, terrainMaxCoordX);
+            int randomY = Random.Range(0, terrainMaxCoordY);
+
+            var randomCoordinate = new Vector2Int(randomX, randomY);
+
+            while (terrain.cells[randomX, randomY].value != 0)
+            {
+                randomX = Random.Range(0, terrainMaxCoordX);
+                randomY = Random.Range(0, terrainMaxCoordY);
+
+                randomCoordinate = new Vector2Int(randomX, randomY);
+            }
+
+            obstacle.MatrixPosition = randomCoordinate;
         }
     }
 }
