@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class CharactersPositionChangeEvent : Event
 {
-    public override void Execute(Match match)
+    public override void Execute(Match match, MonoBehaviour monoBehaviour)
     {
         ChangeCharacterPosition(match);
+        match.player.canMove = true;
+        match.player.actions = 5;
     }
 
     void ChangeCharacterPosition(Match match)

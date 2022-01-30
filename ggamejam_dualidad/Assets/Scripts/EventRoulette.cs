@@ -11,8 +11,13 @@ public class EventRoulette : MonoBehaviour
     public string[] eventNames =
     {
         "Teletransportación",
-        "Evento testeo",
-        "Evento random"
+        "Cambio de perspectiva",
+    };
+
+    readonly Event[] events =
+    {
+        new CharactersPositionChangeEvent(),
+        new CameraRotationEvent()
     };
 
     public float rouletteTempo = 5f;
@@ -35,22 +40,19 @@ public class EventRoulette : MonoBehaviour
 
     void ExecuteRandomEvent()
     {
-        Event[] events =
-        {
-            new CharactersPositionChangeEvent(),
-            new TestEvent()
-        };
-
         int randomIndex = Random.Range(0, events.Length);
+
+        while (!events[randomIndex].canHappen)
+        {
+            randomIndex = Random.Range(0, events.Length);
+        }
 
         if (eventText)
         {
             eventText.text = eventNames[randomIndex];
         }
 
-        events[randomIndex].Execute(match);
-        match.player.canMove = true;
-        match.player.actions=5;
+        events[randomIndex].Execute(match, this);
     }
 
     IEnumerator RandomTextCoroutine()
@@ -58,6 +60,7 @@ public class EventRoulette : MonoBehaviour
         while(rouletteTempo > 0f)
         {
             rouletteTempo -= .2f;
+            rouletteTempo -= Time.deltaTime;
 
             // Random event name to display
             int randomIndex = Random.Range(0, eventNames.Length - 1);
@@ -66,7 +69,7 @@ public class EventRoulette : MonoBehaviour
                 eventText.text = eventNames[randomIndex];
             }
 
-            yield return new WaitForSeconds(.2f);
+            yield return new WaitForSeconds(.1f);
         }
 
         rouletteTempo = 5f;

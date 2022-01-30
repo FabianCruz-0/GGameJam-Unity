@@ -4,5 +4,6 @@ using UnityEngine;
 
 public abstract class Event
 {
-    public abstract void Execute(Match match);
+    public bool canHappen = true;
+    public abstract void Execute(Match match, MonoBehaviour monoBehaviour = null);
 }
